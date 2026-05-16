@@ -45,15 +45,15 @@ export const Modal = ({ isOpen, onClose, title, children, className }: ModalProp
       <div 
         ref={modalRef}
         className={cn(
-          "w-full max-w-lg scale-100 transform overflow-hidden rounded-xl bg-white shadow-2xl transition-all",
+          "w-full max-w-lg scale-100 transform overflow-hidden rounded-xl bg-white dark:bg-gray-800 shadow-2xl transition-all",
           className
         )}
       >
-        <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
-          <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+        <div className="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 px-6 py-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h3>
           <button
             onClick={onClose}
-            className="rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+            className="rounded-full p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-gray-700 dark:hover:text-gray-300 transition-colors"
           >
             <X size={20} />
           </button>

@@ -52,7 +52,7 @@ export const LeadsTable = ({ onEdit }: LeadsTableProps) => {
 
   if (isError || !data) {
     return (
-      <div className="flex h-64 items-center justify-center bg-white">
+      <div className="flex h-64 items-center justify-center bg-white dark:bg-gray-800">
         <p className="text-red-500">Failed to load leads. Please try again.</p>
       </div>
     );
@@ -62,77 +62,77 @@ export const LeadsTable = ({ onEdit }: LeadsTableProps) => {
   const meta = data.meta!;
 
   return (
-    <div className="bg-white rounded-b-xl shadow-sm border border-t-0 border-gray-200 flex flex-col">
+    <div className="bg-white dark:bg-gray-800 rounded-b-xl shadow-sm border border-t-0 border-gray-200 dark:border-gray-700 flex flex-col">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead className="bg-gray-50 dark:bg-gray-700/50">
             <tr>
               <th 
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => toggleSort('name')}
               >
                 Lead {renderSortIndicator('name')}
               </th>
               <th 
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => toggleSort('status')}
               >
                 Status {renderSortIndicator('status')}
               </th>
               <th 
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => toggleSort('source')}
               >
                 Source {renderSortIndicator('source')}
               </th>
               <th 
-                className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => toggleSort('createdAt')}
               >
                 Created {renderSortIndicator('createdAt')}
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
           </thead>
-          <tbody className={`bg-white divide-y divide-gray-200 ${isPlaceholderData ? 'opacity-50 transition-opacity duration-200' : ''}`}>
+          <tbody className={`bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700 ${isPlaceholderData ? 'opacity-50 transition-opacity duration-200' : ''}`}>
             {leads.length === 0 ? (
               <tr>
-                <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
+                <td colSpan={5} className="px-6 py-12 text-center text-gray-500 dark:text-gray-400">
                   No leads found. Try adjusting your filters.
                 </td>
               </tr>
             ) : (
               leads.map((lead) => (
-                <tr key={lead._id} className="hover:bg-gray-50 transition-colors">
+                <tr key={lead._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex flex-col">
-                      <span className="text-sm font-medium text-gray-900">{lead.name}</span>
-                      <span className="text-sm text-gray-500">{lead.email}</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-white">{lead.name}</span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400">{lead.email}</span>
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-                      ${lead.status === 'NEW' ? 'bg-blue-100 text-blue-800' : ''}
-                      ${lead.status === 'CONTACTED' ? 'bg-yellow-100 text-yellow-800' : ''}
-                      ${lead.status === 'QUALIFIED' ? 'bg-green-100 text-green-800' : ''}
-                      ${lead.status === 'LOST' ? 'bg-red-100 text-red-800' : ''}
+                      ${lead.status === 'NEW' ? 'bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300' : ''}
+                      ${lead.status === 'CONTACTED' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/40 dark:text-yellow-300' : ''}
+                      ${lead.status === 'QUALIFIED' ? 'bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300' : ''}
+                      ${lead.status === 'LOST' ? 'bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300' : ''}
                     `}>
                       {lead.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                     {lead.source}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                     {new Date(lead.createdAt).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <div className="flex items-center justify-end space-x-3">
                       <button 
                         onClick={() => onEdit(lead)}
-                        className="text-blue-600 hover:text-blue-900 p-1"
+                        className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300 p-1"
                         title="Edit lead"
                       >
                         <Edit2 size={16} />
@@ -140,7 +140,7 @@ export const LeadsTable = ({ onEdit }: LeadsTableProps) => {
                       {isAdmin && (
                         <button 
                           onClick={() => handleDelete(lead._id)}
-                          className="text-red-600 hover:text-red-900 p-1"
+                          className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 p-1"
                           title="Delete lead"
                           disabled={deleteLead.isPending}
                         >
@@ -158,10 +158,10 @@ export const LeadsTable = ({ onEdit }: LeadsTableProps) => {
 
       {/* Pagination Footer */}
       {leads.length > 0 && (
-        <div className="flex items-center justify-between border-t border-gray-200 bg-white px-6 py-3">
+        <div className="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-6 py-3">
           <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm text-gray-700">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
                 Showing <span className="font-medium">{(meta.page - 1) * meta.limit + 1}</span> to{' '}
                 <span className="font-medium">{Math.min(meta.page * meta.limit, meta.total)}</span> of{' '}
                 <span className="font-medium">{meta.total}</span> results
@@ -179,7 +179,7 @@ export const LeadsTable = ({ onEdit }: LeadsTableProps) => {
                 >
                   Previous
                 </Button>
-                <div className="flex items-center justify-center px-4 border border-gray-300 bg-gray-50 text-sm font-medium text-gray-700">
+                <div className="flex items-center justify-center px-4 border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300">
                   Page {meta.page} of {meta.totalPages}
                 </div>
                 <Button

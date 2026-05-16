@@ -57,7 +57,7 @@ export const LeadsFilters = () => {
   };
 
   return (
-    <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0 bg-white p-4 rounded-t-xl border-b border-gray-200">
+    <div className="flex flex-col space-y-4 sm:flex-row sm:items-center sm:space-x-4 sm:space-y-0 bg-white dark:bg-gray-800 p-4 rounded-t-xl border-b border-gray-200 dark:border-gray-700">
       <div className="flex-1">
         <Input
           placeholder="Search by name or email..."
@@ -102,13 +102,13 @@ export const LeadsFilters = () => {
               resetFilters();
             }}
             title="Clear filters"
-            className="px-3 text-gray-500 hover:text-red-600"
+            className="px-3 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400"
           >
             <FilterX size={18} />
           </Button>
         )}
 
-        <div className="h-8 w-px bg-gray-200 hidden sm:block"></div>
+        <div className="h-8 w-px bg-gray-200 dark:bg-gray-600 hidden sm:block"></div>
 
         <Button 
           variant="outline" 
