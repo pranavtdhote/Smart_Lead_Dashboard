@@ -5,6 +5,7 @@ import type { User, ApiSuccessResponse } from '../../../types';
 interface AuthResponse {
   user: User;
   accessToken: string;
+  refreshToken: string;
 }
 
 export const authApi = {

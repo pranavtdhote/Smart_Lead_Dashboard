@@ -33,7 +33,7 @@ export const RegisterPage = () => {
       setIsLoading(true);
       setServerError(null);
       const response = await authApi.register(data);
-      setAuth(response.user, response.accessToken);
+      setAuth(response.user, response.accessToken, response.refreshToken);
       navigate('/');
     } catch (error: any) {
       if (error.response?.data?.message) {

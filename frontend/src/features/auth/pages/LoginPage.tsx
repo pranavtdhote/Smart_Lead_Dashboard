@@ -28,7 +28,7 @@ export const LoginPage = () => {
       setIsLoading(true);
       setServerError(null);
       const response = await authApi.login(data);
-      setAuth(response.user, response.accessToken);
+      setAuth(response.user, response.accessToken, response.refreshToken);
       navigate('/');
     } catch (error: any) {
       // Axios error formatting is handled in interceptor, but we catch form specific errors here

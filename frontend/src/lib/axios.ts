@@ -5,7 +5,6 @@ import type { ApiErrorResponse } from '../types';
 
 export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api/v1',
-  withCredentials: true, // Required for refresh token cookies
   headers: {
     'Content-Type': 'application/json',
   },
@@ -24,7 +23,7 @@ apiClient.interceptors.request.use((config) => {
 let isRefreshing = false;
 let failedQueue: Array<{ resolve: (val?: unknown) => void; reject: (err: unknown) => void }> = [];
 
-const processQueue = (error: any, token: string | null = null) => {
+const processQueue = (error: unknown, token: string | null = null) => {
   failedQueue.forEach((prom) => {
     if (error) {
       prom.reject(error);
@@ -63,14 +62,21 @@ apiClient.interceptors.response.use(
       isRefreshing = true;
 
       try {
+        // Send the refresh token in the request BODY (not cookie)
+        const currentRefreshToken = useAuthStore.getState().refreshToken;
+
+        if (!currentRefreshToken) {
+          throw new Error('No refresh token available');
+        }
+
         const { data } = await axios.post(
           `${apiClient.defaults.baseURL}/auth/refresh`,
-          {},
-          { withCredentials: true }
+          { refreshToken: currentRefreshToken },
         );
 
         const newAccessToken = data.data.accessToken;
-        useAuthStore.getState().setAccessToken(newAccessToken);
+        const newRefreshToken = data.data.refreshToken;
+        useAuthStore.getState().setTokens(newAccessToken, newRefreshToken);
         
         processQueue(null, newAccessToken);
         

@@ -6,26 +6,28 @@ import { apiClient } from '../lib/axios';
 interface AuthState {
   user: User | null;
   accessToken: string | null;
+  refreshToken: string | null;
   isAuthenticated: boolean;
-  setAuth: (user: User, accessToken: string) => void;
-  setAccessToken: (accessToken: string) => void;
+  setAuth: (user: User, accessToken: string, refreshToken: string) => void;
+  setTokens: (accessToken: string, refreshToken: string) => void;
   logout: () => void;
   checkAuth: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       user: null,
       accessToken: null,
+      refreshToken: null,
       isAuthenticated: false,
 
-      setAuth: (user, accessToken) => {
-        set({ user, accessToken, isAuthenticated: true });
+      setAuth: (user, accessToken, refreshToken) => {
+        set({ user, accessToken, refreshToken, isAuthenticated: true });
       },
 
-      setAccessToken: (accessToken) => {
-        set({ accessToken });
+      setTokens: (accessToken, refreshToken) => {
+        set({ accessToken, refreshToken });
       },
 
       logout: async () => {
@@ -34,24 +36,34 @@ export const useAuthStore = create<AuthState>()(
         } catch {
           // Ignore logout errors
         } finally {
-          set({ user: null, accessToken: null, isAuthenticated: false });
+          set({ user: null, accessToken: null, refreshToken: null, isAuthenticated: false });
         }
       },
 
       checkAuth: async () => {
+        const { accessToken } = get();
+        if (!accessToken) {
+          set({ user: null, accessToken: null, refreshToken: null, isAuthenticated: false });
+          return;
+        }
+
         try {
           // Verify current token or try to refresh via interceptor
           const { data } = await apiClient.get('/auth/me');
           set({ user: data.data.user, isAuthenticated: true });
         } catch {
-          set({ user: null, accessToken: null, isAuthenticated: false });
+          set({ user: null, accessToken: null, refreshToken: null, isAuthenticated: false });
         }
       },
     }),
     {
       name: 'auth-storage',
-      // Only persist the token and user data, not the checking state
-      partialize: (state) => ({ user: state.user, accessToken: state.accessToken, isAuthenticated: state.isAuthenticated }),
+      partialize: (state) => ({
+        user: state.user,
+        accessToken: state.accessToken,
+        refreshToken: state.refreshToken,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 );
