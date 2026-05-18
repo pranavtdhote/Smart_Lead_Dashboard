@@ -31,6 +31,8 @@ const allowedOrigins = [
   'https://smart-lead-dashboard-delta.vercel.app',
 ];
 
+app.use(helmet());
+
 app.use(
   cors({
     origin: function (origin, callback) {
