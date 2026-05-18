@@ -37,6 +37,8 @@ app.use(
   }),
 );
 
+app.options('*', cors());
+
 // Global rate limiter — prevents brute force & DDoS
 const limiter = rateLimit({
   windowMs: env.RATE_LIMIT_WINDOW_MS,
