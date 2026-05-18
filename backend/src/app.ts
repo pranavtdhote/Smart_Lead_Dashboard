@@ -35,16 +35,27 @@ app.use(helmet());
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (postman/mobile apps)
-      if (!origin) return callback(null, true);
+    origin: (origin, callback) => {
+      console.log('Incoming Origin:', origin);
 
+      // Allow requests with no origin
+      // (Postman, mobile apps, server-to-server)
+      if (!origin) {
+        return callback(null, true);
+      }
+
+      // Allow frontend origin
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
 
-      return callback(new Error('Not allowed by CORS'));
+      console.log('Blocked by CORS:', origin);
+
+      // IMPORTANT:
+      // Do NOT throw error here
+      return callback(null, false);
     },
+
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
