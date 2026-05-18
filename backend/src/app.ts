@@ -37,7 +37,7 @@ app.use(
   }),
 );
 
-app.options('*', cors());
+app.options(/.*/, cors());
 
 // Global rate limiter — prevents brute force & DDoS
 const limiter = rateLimit({
