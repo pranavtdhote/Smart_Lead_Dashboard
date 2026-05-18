@@ -27,32 +27,25 @@ import authRoutes from './modules/auth/auth.route';
 const app = express();
 
 // ─── 1. Security Middlewares ─────────────────────────────────
-const allowedOrigins = [
-  'https://smart-lead-dashboard-delta.vercel.app',
-];
 
 app.use(helmet());
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      console.log('Incoming Origin:', origin);
-
-      // Allow requests with no origin
-      // (Postman, mobile apps, server-to-server)
       if (!origin) {
         return callback(null, true);
       }
 
-      // Allow frontend origin
-      if (allowedOrigins.includes(origin)) {
+      // Allow all Vercel deployments
+      if (
+        origin.includes('vercel.app')
+      ) {
         return callback(null, true);
       }
 
       console.log('Blocked by CORS:', origin);
 
-      // IMPORTANT:
-      // Do NOT throw error here
       return callback(null, false);
     },
 
